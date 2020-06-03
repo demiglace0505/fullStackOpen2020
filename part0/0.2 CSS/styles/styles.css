@@ -1,0 +1,32 @@
+html {
+	font-size: 18px;
+	font-family: 'Noto Serif JP', serif;
+	background-color: lavender;
+}
+
+img {
+	display: block;
+	margin: 0 auto;
+}
+
+h1 {
+	margin: 0;
+	padding: 20px 0;
+	color: lavender;
+	text-shadow: 1px 2px 1px black;
+	font-size: 60px;
+	text-align: center;
+}
+
+p, li {
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+
+body {
+	width: 600px;
+	margin: 0 auto;
+	background-color: steelblue;
+	padding: 0 20px 20px 20px;
+	border: 5px solid black;
+}
