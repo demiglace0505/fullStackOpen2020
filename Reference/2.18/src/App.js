@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
-import NotificationBanner from './components/NotificationBanner.js'
 import Persons from './components/Persons.js'
 import PersonForm from './components/PersonForm.js'
 import Filter from './components/Filter.js'
@@ -12,8 +12,6 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [nameFilter, setNewNameFilter] = useState('')
-    const [notifMessage, setNotifMessage] = useState(null)
-    const [notifType, setNotifType] = useState(null) // success or error
 
     useEffect(() => {
         personService.getAll()
@@ -22,6 +20,22 @@ const App = () => {
                 setPersons(allPersons)
             })
     }, [])
+
+    const personsToShow = nameFilter === ''
+        ? persons
+        : persons.filter((person) => person.name.toLowerCase().includes(nameFilter.toLowerCase()) === true)
+
+    const handleNewName = (event) => {
+        setNewName(event.target.value)
+    }
+
+    const handleNewNumber = (event) => {
+        setNewNumber(event.target.value)
+    }
+
+    const handleFilter = (event) => {
+        setNewNameFilter(event.target.value)
+    }
 
     const addPerson = (event) => {
         event.preventDefault()
@@ -32,7 +46,7 @@ const App = () => {
                 const personToUpdate = persons.find((person) => person.name === newName)
                 personToUpdate.number = newNumber
 
-                personService.updateNumber(personToUpdate.id, personToUpdate)
+                personService.updateNumber( personToUpdate.id , personToUpdate )
                     .then((udpatedPerson) => {
                         setPersons(persons.map((person) => person.id !== personToUpdate.id
                             ? person
@@ -40,26 +54,6 @@ const App = () => {
                         ))
                         setNewName('')
                         setNewNumber('')
-                        setNotifType('success')
-                        setNotifMessage(
-                            `Updated ${personToUpdate.name}`
-                        )
-                        setTimeout(() => {
-                            setNotifMessage(null)
-                            setNotifType(null)
-                        }, 5000)
-                    })
-                    .catch((err) => {
-                        console.log(err);
-
-                        setNotifType('error')
-                        setNotifMessage(
-                            `Information of ${personToUpdate.name} has already been removed from server`
-                        )
-                        setTimeout(() => {
-                            setNotifMessage(null)
-                            setNotifType(null)
-                        }, 5000)
                     })
 
                 // cancel number update
@@ -78,14 +72,6 @@ const App = () => {
                     setPersons(persons.concat(createdPerson))
                     setNewName('')
                     setNewNumber('')
-                    setNotifType('success')
-                    setNotifMessage(
-                        `Added ${newPerson.name}`
-                    )
-                    setTimeout(() => {
-                        setNotifMessage(null)
-                        setNotifType(null)
-                    }, 5000)
                 })
         }
 
@@ -96,19 +82,7 @@ const App = () => {
             personService.deletePerson(id)
                 .then(() => {
                     setPersons(persons.filter(person => person.id !== id))
-                    // console.log(`deleted ${name} id: ${id}`);
-                })
-                .catch((err) => {
-                    console.log(err);
-
-                    setNotifType('error')
-                    setNotifMessage(
-                        `Information of ${name} has already been removed from server`
-                    )
-                    setTimeout(() => {
-                        setNotifMessage(null)
-                        setNotifType(null)
-                    }, 5000)
+                    console.log(`deleted ${name} id: ${id}`);
                 })
         }
         else {
@@ -116,26 +90,9 @@ const App = () => {
         }
     }
 
-    const personsToShow = nameFilter === ''
-        ? persons
-        : persons.filter((person) => person.name.toLowerCase().includes(nameFilter.toLowerCase()) === true)
-
-    const handleNewName = (event) => {
-        setNewName(event.target.value)
-    }
-
-    const handleNewNumber = (event) => {
-        setNewNumber(event.target.value)
-    }
-
-    const handleFilter = (event) => {
-        setNewNameFilter(event.target.value)
-    }
-
     return (
         <div>
             <h2>Phonebook</h2>
-            <NotificationBanner message={notifMessage} notifType={notifType} />
             <Filter handleFilter={handleFilter} />
 
             <h3>add a new</h3>
