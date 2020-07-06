@@ -24,14 +24,19 @@ const favoriteBlog = (blogs) => {
 }
 
 const mostBlogs = (blogs) => {
-  const authors = blogs.map(blog => blog.author)
+  // const authors = blogs.map(blog => blog.author)
   // console.log(authors)
 
-  const count = _.chain(authors)
-    .countBy()
+  // const count = _.chain(authors)
+  //   .countBy()
+  //   .toPairs()
+  //   .value()
+
+  const count = _.chain(blogs)
+    .countBy('author')
     .toPairs()
     .value()
-
+  
   const sorted = count.sort( (a,b) => {
     return b[1] - a[1]
   })
