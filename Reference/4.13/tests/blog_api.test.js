@@ -86,6 +86,27 @@ describe('API TESTS', () => {
       const blogwithAdded = blogs.map(blog => blog.toJSON())
       expect(blogwithAdded).toHaveLength(helper.initialBlog.length)
   })
+
+  // 4.13
+  test('deleting a blog post', async () => {
+    const blogs = await Blog.find({})
+    const blogArray = blogs.map(blog => blog.toJSON())
+
+    const blogToDelete = blogArray[0]
+
+    // console.log('before deleting',blogArray)
+    await api.delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogAfterDeletion = await Blog.find({})
+    const blogArrayAfterDeletion = blogAfterDeletion.map(blog => blog.toJSON())
+    const blogTitles = blogArrayAfterDeletion.map(b => b.title)
+
+    // console.log('after deleting', blogArrayAfterDeletion)
+
+    expect(blogAfterDeletion).toHaveLength(helper.initialBlog.length - 1)
+    expect(blogTitles).not.toContain(blogToDelete.content)
+  })
 })
 
 
