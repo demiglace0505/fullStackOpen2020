@@ -1,11 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhaW4iLCJpZCI6IjVmMDZlOTYxNjBkMjZhMGU4OGJhYzg0ZCIsImlhdCI6MTU5NDM2MDE3M30.V4oerMYxQE1L0tyT7hvYZvfhODvt8qwFoIHfK3BYyOE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmMDgwYjlkOTZiZDQ0MDIyMGY2MjZmYSIsImlhdCI6MTU5NDM2MzM5OX0.LhAlRz6xdC_xH_hA_tMDOlnjVxZ1mUe4JOkdogoj20o
 
 {
-  "title": "4.20 TESTING TOKENS midware",
-  "author": "LAIN",
+  "title": "4.21 written by ROOT, should not be deleted by LAIN",
+  "author": "root",
   "url": "google.com",
-  "likes": "13",
-  "userId": "5f06e96160d26a0e88bac84d"
+  "likes": "1312312",
+  "userId": "5f080b9d96bd440220f626fa"
 }
