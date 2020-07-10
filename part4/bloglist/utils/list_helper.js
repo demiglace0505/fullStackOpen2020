@@ -36,7 +36,7 @@ const mostBlogs = (blogs) => {
     .countBy('author')
     .toPairs()
     .value()
-  
+  // console.log(count)
   const sorted = count.sort( (a,b) => {
     return b[1] - a[1]
   })
@@ -51,7 +51,7 @@ const mostBlogs = (blogs) => {
 
 const mostLikes = (blogs) => {
   const blogsByAuthor = _.groupBy(blogs, 'author')
-  // console.log(blogsByAuthor)
+  console.log(blogsByAuthor)
   const sorted = Object.keys(blogsByAuthor)
     .map(author => {
       return {
