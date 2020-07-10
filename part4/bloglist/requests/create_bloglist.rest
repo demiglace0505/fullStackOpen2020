@@ -1,8 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhaW4iLCJpZCI6IjVmMDZlOTYxNjBkMjZhMGU4OGJhYzg0ZCIsImlhdCI6MTU5NDM2MDE3M30.V4oerMYxQE1L0tyT7hvYZvfhODvt8qwFoIHfK3BYyOE
 
 {
-  "title": "4.17 another test-with-user",
+  "title": "4.19 TESTING TOKENS",
   "author": "LAIN",
   "url": "google.com",
   "likes": "13",

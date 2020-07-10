@@ -1,6 +1,7 @@
 node_modules
 Thumbs.db
 *.log
+requests
 Sandbox
 Sandbox-html
 
