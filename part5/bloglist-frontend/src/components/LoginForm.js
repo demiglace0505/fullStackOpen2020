@@ -1,8 +1,9 @@
 import React from 'react'
 
-const LoginForm = ( {username, password, handleLogin, setUsername, setPassword} ) => (
+const LoginForm = ({ username, password, handleLogin, setUsername, setPassword }) => (
   <form onSubmit={handleLogin}>
     <div>
+      <h1>log in to application</h1>
       username
         <input
         type="text"
