@@ -2,16 +2,19 @@ import React, { useState } from 'react'
 import blogService from '../services/blogs.js'
 import '../App.css'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, currUser, handleDelete }) => {
+  const [likes, setlikes] = useState(blog.likes)
   const [expanded, setExpanded] = useState(false)
+  
+  const deleteButton = { display: currUser.id === blog.user.id ? '' : 'none' }
 
   const expandedInfoVisible = { display: expanded ? '' : 'none' }
   const expandButtonText = () => expanded ? 'hide' : 'view'
-  const [likes, setlikes] = useState(blog.likes)
+
 
   const handleLike = async (event) => {
     event.preventDefault()
-    const updatedBlog = { ...blog, likes: likes + 1}
+    const updatedBlog = { ...blog, likes: likes + 1 }
     // console.log(updatedBlog)
 
     const res = await blogService.update(updatedBlog.id, updatedBlog)
@@ -33,6 +36,7 @@ const Blog = ({ blog }) => {
           <button onClick={(event) => handleLike(event)}>like</button>
         </div>
         <div>{blog.user.username}</div>
+        <button onClick={() => handleDelete(blog.id, blog.title)} style={deleteButton}>DELETE</button>
       </div>
     </div>
   )

@@ -28,6 +28,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
+      console.log('current user:', user)
     }
   }, [])
 
@@ -58,7 +59,7 @@ const App = () => {
   }
 
   const sortBlogs = (blogs) => {
-    blogs.sort((a,b) => b.likes - a.likes)
+    blogs.sort((a, b) => b.likes - a.likes)
   }
 
   const addBlog = async (newBlog) => {
@@ -73,6 +74,24 @@ const App = () => {
       setnotifMessage(null)
       setnotifType(null)
     }, 5000)
+  }
+
+  const handleDelete = async (id, title) => {
+    if (window.confirm(`delete ${title}?`)) {
+      // console.log('hella lit')
+      await blogService.deleteBlog(id)
+      setBlogs(blogs.filter((blog) => blog.id !== id))
+      setnotifType('success')
+      setnotifMessage(
+        `blog ${title} has been deleted`
+      )
+      setTimeout(() => {
+        setnotifMessage(null)
+        setnotifType(null)
+      }, 5000)
+    } else {
+      console.log('cancelled delete')
+    }
   }
 
   const handleLogout = () => {
@@ -124,7 +143,7 @@ const App = () => {
 
               <div>
                 {blogs.map(blog =>
-                  <Blog key={blog.id} blog={blog} />
+                  <Blog key={blog.id} blog={blog} currUser={user} handleDelete={handleDelete} />
                 )}
               </div>
             </div>
