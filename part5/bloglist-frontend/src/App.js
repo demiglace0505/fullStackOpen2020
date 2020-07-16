@@ -57,17 +57,17 @@ const App = () => {
   }
 
   const addBlog = async (newBlog) => {
-      const returnedBlog = await blogService.create(newBlog)
-      // console.log('after await')
-      setBlogs(blogs.concat(returnedBlog))
-      setnotifType('success')
-      setnotifMessage(
-        `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
-      )
-      setTimeout(() => {
-        setnotifMessage(null)
-        setnotifType(null)
-      }, 5000)
+    const returnedBlog = await blogService.create(newBlog)
+    // console.log('after await')
+    setBlogs(blogs.concat(returnedBlog))
+    setnotifType('success')
+    setnotifMessage(
+      `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+    )
+    setTimeout(() => {
+      setnotifMessage(null)
+      setnotifType(null)
+    }, 5000)
   }
 
   const handleLogout = () => {
@@ -86,7 +86,7 @@ const App = () => {
   )
 
   const blogForm = () => (
-    <Togglable buttonLabel='new blog'>
+    <Togglable openLabel='new blog' closeLabel='cancel'>
       <BlogForm
         addBlog={addBlog}
       />
