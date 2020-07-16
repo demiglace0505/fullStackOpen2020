@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import blogService from '../services/blogs.js'
 import '../App.css'
 
 const Blog = ({ blog, currUser, handleDelete }) => {
   const [likes, setlikes] = useState(blog.likes)
   const [expanded, setExpanded] = useState(false)
-  
+
   const deleteButton = { display: currUser.id === blog.user.id ? '' : 'none' }
 
   const expandedInfoVisible = { display: expanded ? '' : 'none' }
@@ -17,7 +18,7 @@ const Blog = ({ blog, currUser, handleDelete }) => {
     const updatedBlog = { ...blog, likes: likes + 1 }
     // console.log(updatedBlog)
 
-    const res = await blogService.update(updatedBlog.id, updatedBlog)
+    await blogService.update(updatedBlog.id, updatedBlog)
     setlikes(likes + 1)
     // console.log(res)
   }
@@ -40,6 +41,12 @@ const Blog = ({ blog, currUser, handleDelete }) => {
       </div>
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  currUser: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }
 
 export default Blog

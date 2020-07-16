@@ -10,9 +10,9 @@ const BlogForm = ({ addBlog }) => {
     event.preventDefault()
     console.log('sending:', newBlogTitle, newBlogAuthor, newBlogUrl)
     addBlog({
-        title: newBlogTitle,
-        author: newBlogAuthor,
-        url: newBlogUrl
+      title: newBlogTitle,
+      author: newBlogAuthor,
+      url: newBlogUrl
     })
     setnewBlogTitle('')
     setnewBlogAuthor('')

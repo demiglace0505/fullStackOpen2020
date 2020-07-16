@@ -28,7 +28,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
-      console.log('current user:', user)
+      // console.log('current user:', user)
     }
   }, [])
 
@@ -49,7 +49,7 @@ const App = () => {
       console.log(exception)
       setnotifType('error')
       setnotifMessage(
-        `wrong username or password`
+        'wrong username or password'
       )
       setTimeout(() => {
         setnotifMessage(null)

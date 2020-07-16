@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NotificationBanner = ( {notifMessage, notifType} ) => {
+const NotificationBanner = ( { notifMessage, notifType } ) => {
   if (notifMessage === null) {
     return null
   }
