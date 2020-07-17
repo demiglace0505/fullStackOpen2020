@@ -18,8 +18,7 @@ const unknownEndpoint = (req, res) => {
 
 // error handler
 const errorHandler = (err, req, res, next) => {
-  logger.error(err.message)
-
+  
   if (err.name === 'CastError') {
     return res.status(400).json({ error: 'malformatted id' })
   } else if (err.name === 'ValidationError') {
@@ -29,6 +28,7 @@ const errorHandler = (err, req, res, next) => {
       error: 'invalid token'
     })
   }
+  logger.error(err.message)
   next(err)
 }
 
