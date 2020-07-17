@@ -34,11 +34,9 @@ const Blog = ({ blog, currUser, handleDelete }) => {
       </div>
       <div style={expandedInfoVisible} className="expandedInfo">
         <div>{blog.url}</div>
-        <div className="likesInfo">
+        <div>
           likes: {likes}
-          <div>
-            <button onClick={(event) => handleLike(event)}>like</button>
-          </div>
+          <button onClick={(event) => handleLike(event)}>like</button>
         </div>
         <div>{blog.user.username}</div>
         <button onClick={() => handleDelete(blog.id, blog.title)} style={deleteButton}>DELETE</button>
