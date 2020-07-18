@@ -81,7 +81,8 @@ describe('Blog app', function () {
         .should('contain', 'likes: 6')
     })
 
-    describe.only('Deleting Blog posts', function () {
+    // 5.21
+    describe('Deleting Blog posts', function () {
       beforeEach(function () {
         cy.createBlog({
           title: 'test blog, NOT FOR DELETION',
@@ -110,7 +111,7 @@ describe('Blog app', function () {
           .should('not.contain', 'another test blog, THIS IS FOR DELETION')
       })
 
-      it.only('A blog post cannot be deleted  by other users', function () {
+      it('A blog post cannot be deleted  by other users', function () {
         cy.contains('logout')
           .click()
 
@@ -124,9 +125,9 @@ describe('Blog app', function () {
         cy.login({ username: 'anotherUser', password: 'anotherUserPass123' })
 
         cy.get('.blogPost')
-        .contains('another test blog, THIS IS FOR DELETION').parent().as('targetBlog')
-        .contains('view')
-        .click()
+          .contains('another test blog, THIS IS FOR DELETION').parent().as('targetBlog')
+          .contains('view')
+          .click()
 
         cy.get('@targetBlog')
           .get('.deleteButton')
@@ -135,6 +136,53 @@ describe('Blog app', function () {
 
     })
 
+    // 5.22
+    describe.only('Blogs are arranged according to number of likes', function () {
+      beforeEach(function () {
+        cy.login({ username: 'lain', password: 'lainPass123' })
+        cy.createBlog({
+          title: 'TOP BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 403742389
+        })
+        cy.createBlog({
+          title: '3rd BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 5125
+        })
+        cy.createBlog({
+          title: '2nd top BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 12567
+        })
+        cy.createBlog({
+          title: 'sixth BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 0
+        })
+        cy.createBlog({
+          title: '_4th BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 431
+        })
+        cy.createBlog({
+          title: 'a 5th BLOG',
+          author: 'lain',
+          url: 'lain.net',
+          likes: 7
+        })
+      })
+
+      it('Blogs are arranged according to number of likes', function () {
+        const blogs = cy.get('.blogPost')
+        blogs[0].should('contain', 'TOP BLOG')
+      })
+    })
   })
 
 })

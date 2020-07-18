@@ -27,7 +27,10 @@ const Blog = ({ blog, currUser, handleDelete }) => {
 
     <div className="blogPost">
       <div className="basicInfo">
-        {blog.title} {blog.author} <button
+        <span className="titleAndAuthor">
+          {blog.title} {blog.author}
+        </span>
+        <button className="toggleButton"
           onClick={() => setExpanded(!expanded)}>
           {expandButtonText()}
         </button>
