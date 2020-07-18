@@ -37,11 +37,11 @@ const Blog = ({ blog, currUser, handleDelete }) => {
         <div className="likesInfo">
           likes: {likes}
           <div>
-            <button onClick={(event) => handleLike(event)}>like</button>
+            <button className="likeButton" onClick={(event) => handleLike(event)}>like</button>
           </div>
         </div>
         <div>{blog.user.username}</div>
-        <button onClick={() => handleDelete(blog.id, blog.title)} style={deleteButton}>DELETE</button>
+        <button className="deleteButton" onClick={() => handleDelete(blog.id, blog.title)} style={deleteButton}>DELETE</button>
       </div>
     </div>
   )
