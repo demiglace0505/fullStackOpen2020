@@ -11,7 +11,7 @@ const AnecdoteList = (props) => {
   const vote = (anecdote) => {
     // console.log('vote', id)
     props.voteAnecdote(anecdote)
-    props.setNotification(`You voted '${anecdote.content}'`, 5)
+    props.setNotification(`You voted '${anecdote.content}'`, 3)
     // dispatch(setNotification(`You voted '${anecdote.content}'`))
     // setTimeout(()=> {
     //   dispatch(removeNotification())
