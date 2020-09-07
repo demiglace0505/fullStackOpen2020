@@ -18,8 +18,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notifMessage, setnotifMessage] = useState(null)
-  const [notifType, setnotifType] = useState(null)
 
   const blogs = useSelector(state => state.blogs)
   const dispatch = useDispatch()
@@ -58,15 +56,10 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log(exception)
-      setnotifType('error')
-      setnotifMessage(
-        'wrong username or password'
-      )
-      setTimeout(() => {
-        setnotifMessage(null)
-        setnotifType(null)
-      }, 5000)
+      console.log('handleLogin',exception)
+      dispatch(setNotification(
+        'wrong username or password',
+        'error'))
     }
   }
 
@@ -81,14 +74,10 @@ const App = () => {
       // console.log('hella lit')
       await blogService.deleteBlog(id)
       setBlogs(blogs.filter((blog) => blog.id !== id))
-      setnotifType('success')
-      setnotifMessage(
-        `blog ${title} has been deleted`
-      )
-      setTimeout(() => {
-        setnotifMessage(null)
-        setnotifType(null)
-      }, 5000)
+      dispatch(setNotification(
+        `BLOG ${title} HAS BEEN DELETED`,
+        'success'
+      ))
     } else {
       console.log('cancelled delete')
     }
