@@ -35,7 +35,7 @@ export const setNotification = (notifMessage, notifType) => {
       notifMessage,
       notifType
     })
-    const timeoutID = await setTimeout(() => {
+    let timeoutID = await setTimeout(() => {
       dispatch({
         type: 'REMOVE_NOTIFICATION'
       })

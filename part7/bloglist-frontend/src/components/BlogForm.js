@@ -1,26 +1,35 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { setNotification } from '../reducers/notifReducer.js'
+import { createNewBlog } from '../reducers/blogReducer.js'
 
 
-const BlogForm = ({ addBlog }) => {
+const BlogForm = () => {
   const [newBlogTitle, setnewBlogTitle] = useState('')
   const [newBlogAuthor, setnewBlogAuthor] = useState('')
   const [newBlogUrl, setnewBlogUrl] = useState('')
 
+  const dispatch = useDispatch()
+
   const createBlog = (event) => {
     event.preventDefault()
     console.log('sending:', newBlogTitle, newBlogAuthor, newBlogUrl)
-    addBlog({
+    const newBlog = {
       title: newBlogTitle,
       author: newBlogAuthor,
       url: newBlogUrl
-    })
+    }
     setnewBlogTitle('')
     setnewBlogAuthor('')
     setnewBlogUrl('')
+    dispatch(createNewBlog(newBlog))
+    dispatch(setNotification(
+      `A NEW BLOG ${newBlog.title} by ${newBlog.author} HAS BEEN ADDED`,
+      'success'))
   }
 
   return (
-
     <div>
       <h1>create new</h1>
       <form onSubmit={createBlog}>
@@ -30,7 +39,7 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={newBlogTitle}
             name="Title"
-            onChange={({ target }) => setnewBlogTitle(target.value)}
+            onChange={(event) => setnewBlogTitle(event.target.value)}
           />
         </div>
         <div>
@@ -39,7 +48,7 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={newBlogAuthor}
             name="Author"
-            onChange={({ target }) => setnewBlogAuthor(target.value)}
+            onChange={(event) => setnewBlogAuthor(event.target.value)}
           />
         </div>
         <div>
@@ -48,7 +57,7 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={newBlogUrl}
             name="URL"
-            onChange={({ target }) => setnewBlogUrl(target.value)}
+            onChange={(event) => setnewBlogUrl(event.target.value)}
           />
         </div>
         <button id="createBlog-button" type="submit">create</button>

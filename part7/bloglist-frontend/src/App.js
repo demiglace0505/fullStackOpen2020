@@ -34,13 +34,6 @@ const App = () => {
   }, [dispatch])
 
 
-  // useEffect(() => {
-  //   blogService.getAll().then(blogs => {
-  //     sortBlogs(blogs)
-  //     setBlogs(blogs)
-  //   })
-  // }, [])
-
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -81,19 +74,7 @@ const App = () => {
     blogs.sort((a, b) => b.likes - a.likes)
   }
 
-  const addBlog = async (newBlog) => {
-    const returnedBlog = await blogService.create(newBlog)
-    // console.log('after await')
-    setBlogs(blogs.concat(returnedBlog))
-    setnotifType('success')
-    setnotifMessage(
-      `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
-    )
-    setTimeout(() => {
-      setnotifMessage(null)
-      setnotifType(null)
-    }, 5000)
-  }
+
 
   const handleDelete = async (id, title) => {
     if (window.confirm(`delete ${title}?`)) {
@@ -130,9 +111,7 @@ const App = () => {
 
   const blogForm = () => (
     <Togglable openLabel='new blog' closeLabel='cancel'>
-      <BlogForm
-        addBlog={addBlog}
-      />
+      <BlogForm />
     </Togglable>
   )
 
@@ -159,6 +138,8 @@ const App = () => {
               <div>
                 {blogForm()}
               </div>
+
+              <br />
 
               <div className="allBlogs">
                 {blogs.map(blog =>
