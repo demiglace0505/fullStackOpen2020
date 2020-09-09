@@ -1,8 +1,12 @@
+/// to do: trimming, check for token functionalities. fix failed login error message
+
+
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { initializeBlogs } from './reducers/blogReducer.js'
 import { setNotification } from './reducers/notifReducer.js'
+import { setCurrentUser, logoutCurrentUser } from './reducers/userReducer.js'
 
 import Togglable from './components/Togglable.js'
 import Blog from './components/Blog.js'
@@ -17,9 +21,10 @@ const App = () => {
   const [blogss, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
 
   const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -34,34 +39,36 @@ const App = () => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    console.log(loggedUserJSON)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setCurrentUser(user))
       blogService.setToken(user.token)
+      // setUser(user)
       // console.log('current user:', user)
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    console.log('logging in:', username, password)
-    try {
-      const user = await loginService.login({
-        username, password
-      })
+  // const handleLogin = async (event) => {
+  //   event.preventDefault()
+  //   console.log('logging in:', username, password)
+  //   try {
+  //     const user = await loginService.login({
+  //       username, password
+  //     })
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      console.log('handleLogin',exception)
-      dispatch(setNotification(
-        'wrong username or password',
-        'error'))
-    }
-  }
+  //     window.localStorage.setItem('loggedUser', JSON.stringify(user))
+  //     blogService.setToken(user.token)
+  //     setUser(user)
+  //     setUsername('')
+  //     setPassword('')
+  //   } catch (exception) {
+  //     console.log('handleLogin', exception)
+  //     dispatch(setNotification(
+  //       'wrong username or password',
+  //       'error'))
+  //   }
+  // }
 
   const sortBlogs = (blogs) => {
     blogs.sort((a, b) => b.likes - a.likes)
@@ -85,17 +92,12 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
-    setUser(null)
+    // setUser(null)
+    dispatch(logoutCurrentUser())
   }
 
   const loginForm = () => (
-    <LoginForm
-      username={username}
-      password={password}
-      setUsername={setUsername}
-      setPassword={setPassword}
-      handleLogin={handleLogin}
-    />
+    <LoginForm />
   )
 
   const blogForm = () => (
