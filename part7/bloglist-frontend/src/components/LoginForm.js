@@ -5,7 +5,7 @@ import setNotification from '../reducers/notifReducer.js'
 
 import loginService from '../services/login.js'
 import blogService from '../services/blogs.js'
-import { setCurrentUser } from '../reducers/userReducer.js'
+import { setCurrentUser } from '../reducers/signedinUserReducer.js'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')

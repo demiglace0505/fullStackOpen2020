@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { initializeBlogs } from './reducers/blogReducer.js'
 import { setNotification } from './reducers/notifReducer.js'
-import { setCurrentUser, logoutCurrentUser } from './reducers/userReducer.js'
+import { setCurrentUser, logoutCurrentUser } from './reducers/signedinUserReducer.js'
+import {fetchAllUsers} from './reducers/usersReducer.js'
 
 import Togglable from './components/Togglable.js'
 import Blog from './components/Blog.js'
 import LoginForm from './components/LoginForm.js'
 import NotificationBanner from './components/NotificationBanner.js'
+import Users from './components/Users.js'
 import blogService from './services/blogs.js'
 import loginService from './services/login.js'
 import BlogForm from './components/BlogForm.js'
@@ -24,11 +26,15 @@ const App = () => {
   // const [user, setUser] = useState(null)
 
   const blogs = useSelector(state => state.blogs)
-  const user = useSelector(state => state.user)
+  const signedinUser = useSelector(state => state.signedinUser)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initializeBlogs())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(fetchAllUsers())
   }, [dispatch])
 
 
@@ -38,12 +44,12 @@ const App = () => {
 
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    console.log(loggedUserJSON)
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      dispatch(setCurrentUser(user))
-      blogService.setToken(user.token)
+    const signedinUserJSON = window.localStorage.getItem('loggedUser')
+    // console.log(signedinUserJSON)
+    if (signedinUserJSON) {
+      const signedinUser = JSON.parse(signedinUserJSON)
+      dispatch(setCurrentUser(signedinUser))
+      blogService.setToken(signedinUser.token)
       // setUser(user)
       // console.log('current user:', user)
     }
@@ -114,7 +120,7 @@ const App = () => {
 
       <div>
         {
-          user === null
+          signedinUser === null
             ?
             loginForm()
             :
@@ -122,7 +128,7 @@ const App = () => {
               <div>
                 <h1>blogs</h1>
                 <p>
-                  {user.name} is logged in <button onClick={handleLogout}>logout</button>
+                  {signedinUser.name} is logged in <button onClick={handleLogout}>logout</button>
                 </p>
               </div>
 
@@ -134,9 +140,10 @@ const App = () => {
 
               <div className="allBlogs">
                 {blogs.map(blog =>
-                  <Blog key={blog.id} blog={blog} currUser={user} handleDelete={handleDelete} />
+                  <Blog key={blog.id} blog={blog} currUser={signedinUser} handleDelete={handleDelete} />
                 )}
               </div>
+              <Users />
             </div>
         }
       </div>
