@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 // import PropTypes from 'prop-types'
+
+import { setNotification } from '../reducers/notifReducer.js'
+import { deleteBlog, likeBlog } from '../reducers/blogReducer.js'
+
 import blogService from '../services/blogs.js'
 import '../App.css'
 
-const Blog = ({ blog, currUser, handleDelete }) => {
+
+
+
+const Blog = ({ blog }) => {
   const [likes, setlikes] = useState(blog.likes)
   const [expanded, setExpanded] = useState(false)
 
-  const deleteButton = { display: currUser.id === blog.user.id ? '' : 'none' }
+  const signedinUser = useSelector(state => state.signedinUser)
+  const dispatch = useDispatch()
+
+
+  const deleteButton = { display: signedinUser.id === blog.user.id ? '' : 'none' }
 
   const expandedInfoVisible = { display: expanded ? '' : 'none' }
   const expandButtonText = () => expanded ? 'hide' : 'view'
@@ -15,12 +27,26 @@ const Blog = ({ blog, currUser, handleDelete }) => {
 
   const handleLike = async (event) => {
     event.preventDefault()
-    const updatedBlog = { ...blog, likes: likes + 1 }
-    // console.log(updatedBlog)
-
-    await blogService.update(updatedBlog.id, updatedBlog)
-    setlikes(likes + 1)
+    dispatch(likeBlog(blog))
+    // await blogService.update(updatedBlog.id, updatedBlog)
+    // setlikes(likes + 1)
     // console.log(res)
+  }
+
+
+  const handleDelete = async (id, title) => {
+    if (window.confirm(`delete ${title}?`)) {
+      // console.log('hella lit')
+      dispatch(deleteBlog(id))
+      // await blogService.deleteBlog(id)
+      // setBlogs(blogs.filter((blog) => blog.id !== id))
+      dispatch(setNotification(
+        `BLOG ${title} HAS BEEN DELETED`,
+        'success'
+      ))
+    } else {
+      console.log('cancelled delete')
+    }
   }
 
   return (
@@ -38,7 +64,7 @@ const Blog = ({ blog, currUser, handleDelete }) => {
       <div style={expandedInfoVisible} className="expandedInfo">
         <div>{blog.url}</div>
         <div className="likesInfo">
-          likes: {likes}
+          likes: {blog.likes}
           <div>
             <button className="likeButton" onClick={(event) => handleLike(event)}>like</button>
           </div>

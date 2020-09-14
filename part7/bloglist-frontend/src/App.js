@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { initializeBlogs } from './reducers/blogReducer.js'
+import { initializeBlogs, deleteBlog } from './reducers/blogReducer.js'
 import { setNotification } from './reducers/notifReducer.js'
 import { setCurrentUser, logoutCurrentUser } from './reducers/signedinUserReducer.js'
 import { fetchAllUsers } from './reducers/usersReducer.js'
@@ -86,8 +86,9 @@ const App = () => {
   const handleDelete = async (id, title) => {
     if (window.confirm(`delete ${title}?`)) {
       // console.log('hella lit')
-      await blogService.deleteBlog(id)
-      setBlogs(blogs.filter((blog) => blog.id !== id))
+      dispatch(deleteBlog(id))
+      // await blogService.deleteBlog(id)
+      // setBlogs(blogs.filter((blog) => blog.id !== id))
       dispatch(setNotification(
         `BLOG ${title} HAS BEEN DELETED`,
         'success'
