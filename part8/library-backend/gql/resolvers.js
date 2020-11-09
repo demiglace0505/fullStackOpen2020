@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 require('dotenv').config()
 const { UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
+=======
+const { UserInputError } = require('apollo-server')
+>>>>>>> ea663b6790a9af7623b778452ac9e8309cb729db
 
 const Author = require('../models/author.js')
 const Book = require('../models/book.js')
@@ -32,6 +36,7 @@ const resolvers = {
   },
   Author: {
     bookCount: async (root) => {
+<<<<<<< HEAD
       const author = await Author.findOne({ name: root.name })
       return await Book.find({ author: author._id }).countDocuments()
       // // alternative: using populate
@@ -46,6 +51,21 @@ const resolvers = {
       if (!context.currentUser) {
         throw new AuthenticationError("not authenticated")
       }
+=======
+      const author = await Author.findOne({name: root.name})
+      
+      return await Book.find({
+        // searches for a book's author.name field
+        author: author._id
+        // "author.name": { $in: [root.name] }
+        // name: { author: { $in: [root.name] } }
+      }).countDocuments()
+    }
+  },
+  Mutation: {
+    addBook: async (root, args) => {
+      const author = await Author.findOne({ name: args.author })
+>>>>>>> ea663b6790a9af7623b778452ac9e8309cb729db
 
       if (!author) {
         const newAuth = new Author({
@@ -83,16 +103,21 @@ const resolvers = {
 
       return book
     },
+<<<<<<< HEAD
     editAuthor: async (root, args, context) => {
       if (!context.currentUser) {
         throw new AuthenticationError("not authenticated")
       }
 
+=======
+    editAuthor: async (root, args) => {
+>>>>>>> ea663b6790a9af7623b778452ac9e8309cb729db
       const author = await Author.findOne({ name: args.name })
       author.born = args.setBornTo
 
       try {
         await author.save()
+<<<<<<< HEAD
       }
       catch (err) {
         throw new UserInputError(err.message, {
@@ -124,6 +149,16 @@ const resolvers = {
       }
 
       return { value: jwt.sign(userForToken, JWT_SECRET) }
+=======
+      }
+      catch (err) {
+        throw new UserInputError(err.message, {
+          invalidArgs: args
+        })
+      }
+
+      return author
+>>>>>>> ea663b6790a9af7623b778452ac9e8309cb729db
     }
   }
 }
