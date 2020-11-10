@@ -1,12 +1,8 @@
-require('dotenv').config()
-const { UserInputError, AuthenticationError } = require('apollo-server')
-const jwt = require('jsonwebtoken')
+const { UserInputError } = require('apollo-server')
 
 const Author = require('../models/author.js')
 const Book = require('../models/book.js')
-const User = require('../models/user.js')
 
-const JWT_SECRET = process.env.JWT_SECRET
 
 const resolvers = {
   Query: {
@@ -25,27 +21,25 @@ const resolvers = {
       if (args.genre) {
         return Book.find({ genres: args.genre })
       }
-      return Book.find({}).populate('author')
+      return Book.find({})
     },
-    allAuthors: () => Author.find({}),
-    me: (root, args, context) => context.currentUser
+    allAuthors: () => Author.find({})
   },
   Author: {
     bookCount: async (root) => {
-      const author = await Author.findOne({ name: root.name })
-      return await Book.find({ author: author._id }).countDocuments()
-      // // alternative: using populate
-      // const books = await Book.find({}).populate('author')
-      // return books.filter(b => b.author.name === root.name).length
+      const author = await Author.findOne({name: root.name})
+      
+      return await Book.find({
+        // searches for a book's author.name field
+        author: author._id
+        // "author.name": { $in: [root.name] }
+        // name: { author: { $in: [root.name] } }
+      }).countDocuments()
     }
   },
   Mutation: {
-    addBook: async (root, args, context) => {
+    addBook: async (root, args) => {
       const author = await Author.findOne({ name: args.author })
-
-      if (!context.currentUser) {
-        throw new AuthenticationError("not authenticated")
-      }
 
       if (!author) {
         const newAuth = new Author({
@@ -83,11 +77,7 @@ const resolvers = {
 
       return book
     },
-    editAuthor: async (root, args, context) => {
-      if (!context.currentUser) {
-        throw new AuthenticationError("not authenticated")
-      }
-
+    editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
       author.born = args.setBornTo
 
@@ -101,29 +91,6 @@ const resolvers = {
       }
 
       return author
-    },
-    createUser: (root, args) => {
-      const user = new User({ ...args })
-      return user.save()
-        .catch(err => {
-          throw new UserInputError(err.message, {
-            invalidArgs: args
-          })
-        })
-    },
-    login: async (root, args) => {
-      const user = await User.findOne({ username: args.username })
-
-      if (!user || args.password !== 'testPass') {
-        throw new UserInputError("wrong credentials")
-      }
-
-      const userForToken = {
-        username: user.username,
-        id: user._id
-      }
-
-      return { value: jwt.sign(userForToken, JWT_SECRET) }
     }
   }
 }
