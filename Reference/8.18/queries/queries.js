@@ -1,5 +1,14 @@
 import { gql } from '@apollo/client'
 
+export const WHOAMI = gql`
+  query {
+    me {
+      username
+      favoriteGenre
+    }
+  }
+`
+
 export const ALL_AUTHORS = gql`
   query {
     allAuthors {
@@ -13,6 +22,25 @@ export const ALL_AUTHORS = gql`
 export const ALL_BOOKS = gql`
   query {
     allBooks {
+      title
+      published
+      genres
+      author{
+        name
+        born
+        bookCount
+      }
+    }
+  }
+`
+
+export const ALL_BOOKS_WITH_GENRE = gql`
+  query allBooksWithGenre(
+    $genreToSearch: String!
+  ) {
+    allBooks(
+      genre: $genreToSearch
+    ){
       title
       published
       author{
@@ -38,9 +66,11 @@ export const CREATE_BOOK = gql`
       genres: $genres
     ) {
       title
-      author
       published
       genres
+      author {
+        name
+      }
     }
   }
 `

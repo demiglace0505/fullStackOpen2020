@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 
 import { ALL_BOOKS } from '../queries/queries.js'
+import generateTable from '../helpers/generateTable.js'
 
 const Books = (props) => {
+  const [filter, setFilter] = useState('all genres')
   const books = useQuery(ALL_BOOKS)
   console.log(books)
+  let bookArr = []
 
   if (!props.show) {
     return null
@@ -15,30 +18,40 @@ const Books = (props) => {
     return <div>loading books...</div>
   }
 
+  if (filter === 'all genres') {
+    bookArr = books.data.allBooks
+  } else {
+    bookArr = books.data.allBooks.filter((b) => b.genres.includes(filter))
+  }
+
   return (
     <div>
       <h2>books</h2>
+      <div>
+        {`in genre `} <strong>{`${filter}`}</strong>
+      </div>
+      {generateTable(bookArr)}
+      <GenreBar books={books} setFilter={setFilter} />
+    </div>
+  )
+}
 
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th>
-              author
-            </th>
-            <th>
-              published
-            </th>
-          </tr>
-          {books.data.allBooks.map(a =>
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author.name}</td>
-              <td>{a.published}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+const GenreBar = ({ books, setFilter }) => {
+  let allGenres = []
+  books.data.allBooks.forEach((b) => {
+    allGenres = allGenres.concat(b.genres)
+  })
+  allGenres = allGenres.filter((value, index, self) => self.indexOf(value) === index)
+
+  return (
+    <div>
+      {allGenres.map(g =>
+        <button
+          key={g}
+          onClick={() => setFilter(g)}
+        >{g}</button>
+      )}
+      <button onClick={() => setFilter('all genres')}>all genres</button>
     </div>
   )
 }

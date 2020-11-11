@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react'
 
+import { useApolloClient } from '@apollo/client'
+
 import Authors from './components/Authors.js'
 import Books from './components/Books.js'
 import NewBook from './components/NewBook.js'
@@ -10,6 +12,13 @@ import Recommended from './components/Recommended.js'
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
+  const client = useApolloClient()
+
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
+  }
 
   if (!token) {
     return (
@@ -34,7 +43,7 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
         <button onClick={() => setPage('recommend')}>recommend</button>
-        <button onClick={() => setToken(null)}>logout</button>
+        <button onClick={logout}>logout</button>
       </div>
 
       <Authors show={page === 'authors'} />
