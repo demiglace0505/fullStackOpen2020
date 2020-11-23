@@ -8,21 +8,21 @@ interface Result {
   average: number
 }
 
-// interface Inputs {
-//   target: number,
-//   days: Array<number>
-// }
+interface Inputs {
+  target: number,
+  days: Array<number>
+}
 
-// const parseArgs = (args: Array<string>): Inputs => {
-//   const target = Number(args[2]);
-//   const inputNums = args.slice(3);
-//   return {
-//     target,
-//     days: inputNums.map(n => Number(n))
-//   };
-// };
+const parseArgs = (args: Array<string>) => {
+  const target = Number(args[2]);
+  const inputNums = args.slice(3);
+  return {
+    target,
+    days: inputNums.map(n => Number(n))
+  };
+};
 
-export const calculateExercises = (target: number, arr: Array<number>): Result => {
+const calculateExercises = (target: number, arr: Array<number>): Result => {
   // console.log('---', target, arr)
   const periodLength = arr.length;
   const trainingDays = arr.filter(d => d !== 0).length;
@@ -59,5 +59,5 @@ export const calculateExercises = (target: number, arr: Array<number>): Result =
   };
 };
 
-// const { target, days } = parseArgs(process.argv);
-// console.log(calculateExercises(target, days));
+const { target, days } = parseArgs(process.argv);
+console.log(calculateExercises(target, days));
