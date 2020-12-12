@@ -32,6 +32,7 @@ The backbone provided the basic functionalities: connect to a Mongo DB server, d
 #### 4.2 - Refactoring into separate modules
 
 The project was refactored into a more convenient structure rather than being a single index.js file. Each file and directory have their distinct role. The structure of the project is now:
+```
 ├── index.js
 ├── app.js
 ├── build
@@ -46,6 +47,7 @@ The project was refactored into a more convenient structure rather than being a 
 │   ├── config.js
 │   ├── logger.js
 │   └── middleware.js
+```
 The **index.js** file is responsible for starting the app. **app.js** establishes the connection to the DB. Inside the **controllers** directory are the route handlers for our blog application. 
 The **utils** directory contains utilities such as **config.js** for project environment variables configuration, **logger.js** as our own implementation of console logging and **middleware.js** which contains our middlewares such as logging of request details and handling of errors.
 
