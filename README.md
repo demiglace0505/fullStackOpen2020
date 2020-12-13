@@ -2,17 +2,22 @@
 
 > **Important concepts learned**
 >
-> Node.js and Express routers
+> - Node.js and Express routers
 >
-> Postman
 >
-> json-parser (express.json())
+> - Postman
 >
-> Deploying to Heroku
 >
-> MongoDB, mongoose validators
+> - json-parser (express.json())
 >
-> ESLint
+>
+> - Deploying to Heroku
+>
+>
+> - MongoDB, mongoose validators
+>
+>
+> - ESLint
 
 * [3a Node.js and Express](#3a-node-js-and-express)
 * [3b Deploying app to internet](#3b-deploying-app-to-internet)
@@ -28,7 +33,7 @@ In this segment, a simple web server was created using Express. I also learned a
 
 #### 3.1 - Fetching from a hardcoded list
 
-I first setup an express router to `/api/persons`, then fetched using the get method of an express object. The fetch target is a hardcoded array of people.
+To fetch a resource, I first setup an express router to `/api/persons`, then fetched using the get method of an express object. The fetch target is a hardcoded array of people.
 
 ```
 const app = express()
@@ -92,7 +97,7 @@ DELETE http://localhost:3001/api/persons/2
 
 #### 3.5 - Adding of new entries
 
-Adding of new entries can be done using the post method on the designated router endpoint. It is worth noting that concat is used since concat returns a new array.
+Adding of new entries can be done using the post method on the designated router endpoint. It is worth noting that concat() instead of array push is used since concat returns a new array, and we should never mutate arrays in Reactx.
 
 ```
 app.post('/api/persons', (req, res) => {
@@ -173,7 +178,7 @@ app.use(morgan('combined'))
 
 #### 3.8 - Configuring Morgan
 
-To make morgan output a specific set of data, it has to be configured:
+To make morgan output a specific set of data, the following configurations was used:
 
 ```
 morgan.token('object', (req, res) => JSON.stringify(req.body))
@@ -185,7 +190,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :o
 > **Tech used:**
 > [Node cors](https://github.com/expressjs/cors), Heroku, [express static](http://expressjs.com/en/starter/static-files.html), proxy
 
-In this part, I learned to deploy an application to the internet via Heroku. I also learned to make use of a proxy address with the frontend. Since the production build will have a relative URL to 3000/api/notes, whereas the backend is at 3001, the proxy redirects it to 3001.
+In this part, I learned to deploy an application to the internet via Heroku. I learned to serve both the backend and frontend in Heroku by generating a build folder and using express's **static()**. I also learned to make use of a proxy address with the frontend. Since the production build will have a relative URL to 3000/api/notes, whereas the backend is at 3001, the proxy redirects it to 3001.
 
 #### 3.9 - Making the backend work with the frontend
 
@@ -224,7 +229,9 @@ Because of some changes to the code, the frontend would no longer work properly 
 > **Tech used:**
 > MongoDB Atlas, [Mongoose](http://mongoosejs.com/index.html), [dotenv](https://github.com/motdotla/dotenv#readme)
 
-In this part, the focus is using MongoDB Atlas as the provider and also using mongoose library. I learned to create a mongoose model and Schema in this part as well.
+In this part, the focus is using MongoDB Atlas as the provider and also using mongoose library. I learned to create a mongoose model and Schema in this part as well. Using mongoose library, we can do more powerful methods such as **find**, **save**, **findByIdAndRemove** etc.
+
+I also learned to move and centralize all the error handling code into a middleware.
 
 #### 3.12 - Setting up MongoDB, Command Line database
 
