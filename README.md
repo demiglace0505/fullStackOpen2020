@@ -17,7 +17,7 @@
 * [2b Forms](#2b-forms)
 * [2c Getting data from server](#2c-getting-data-from-server)
 * [2d Altering data in server](#2d-altering-data-in-server)
-* [Adding styles to react app](#2e-adding-styles-to-react-app)
+* [2e Adding styles to react app](#2e-adding-styles-to-react-app)
 
 ### 2a: Rendering a collection, modules
 
