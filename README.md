@@ -32,6 +32,7 @@ The backbone provided the basic functionalities: connect to a Mongo DB server, d
 #### 4.2 - Refactoring into separate modules
 
 The project was refactored into a more convenient structure rather than being a single index.js file. Each file and directory have their distinct role. The structure of the project is now:
+
 ```
 ├── index.js
 ├── app.js
@@ -48,6 +49,10 @@ The project was refactored into a more convenient structure rather than being a 
 │   ├── logger.js
 │   └── middleware.js
 ```
+
+The **index.js** file is responsible for starting the app. **app.js** establishes the connection to the DB. Inside the **controllers** directory are the route handlers for our blog application. 
+The **utils** directory contains utilities such as **config.js** for project environment variables configuration, **logger.js** as our own implementation of console logging and **middleware.js** which contains our middlewares such as logging of request details and handling of errors.
+
 The **index.js** file is responsible for starting the app. **app.js** establishes the connection to the DB. Inside the **controllers** directory are the route handlers for our blog application. 
 The **utils** directory contains utilities such as **config.js** for project environment variables configuration, **logger.js** as our own implementation of console logging and **middleware.js** which contains our middlewares such as logging of request details and handling of errors.
 
@@ -332,11 +337,9 @@ usersRouter.post('/', async (req, res) => {
 })
 ```
 
-
-
 #### 4.16 - Adding restrictions to new user properties
 
-I used mongoose-unique-validators to ensure that the username is unique. But since our database stores *passwordHash* instead of the actual password, validators for our password in the model cannot be used so I had to create my own password validator on the route handler itself.
+I used [mongoose-unique-validators](https://www.npmjs.com/package/mongoose-unique-validator) to ensure that the username is unique. But since our database stores *passwordHash* instead of the actual password, validators for our password in the model cannot be used so I had to create my own password validator on the route handler itself.
 
     if (body.password.length < 3) {
         return res.status(400).json({
@@ -382,7 +385,7 @@ And I also added the saved blog to the user's collection of blogs
       user.blogs = user.blogs.concat(saved._id)
       await user.save()
 
-Instead of just showing ids, we can show the actual content itself using mongoose `populate()` method. We can also choose which properties to display using mongo syntax. We modified the blog route handler: 
+Instead of just showing ids, we can show the actual content itself using mongoose **populate()** method. We can also choose which properties to display using mongo syntax. We modified the blog route handler: 
 
 
      const blogs = await Blog.find({}).populate('user', {
@@ -408,6 +411,8 @@ And likewise, we did the same to user's route handler
 > jsonwebtoken, Authorization header: bearer
 
 Token based authentication is a great way to handle authentication. After the user logs in, the backend sends a token to the browser, which is then attached to requests (ie, creating a note). The backend then identifies the user via the token. **jsonwebtoken** library is used for generating JSON web tokens.
+
+I also learned of using tokens to limit user operations.
 
 #### 4.18 - Implementing token based authentication
 
