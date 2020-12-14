@@ -1,4 +1,4 @@
-## Yahallo!
+## Welcome!
 
 This repository serves as my submissions, personal reflections and thoughts on the Full Stack Open 2020 mooc by University of Helsinki. This would also serve as my portfolio, and would constantly be updated as I learn and progress through the material.
 
