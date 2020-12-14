@@ -4,7 +4,7 @@ This repository serves as my submissions, personal reflections and thoughts on t
 
 ### Directory Guide
 
-The repository is structured such as that each part has its own branch, and within each branch is a README file which contains the details of that part. There is also the references folder, which contain the code that I used for each exercise.
+The repository is structured such as that each part has its own branch, and within each branch is a README file which contains the details of that part. Written in the README file are my thoughts, reflections and processes on each exercise and the course as a whole. I also included snippets of code in the README, but it is still preferable to refer to the References directory and cross-check the entire code for each exercise.
 
 The folders are also structured according to part.
 
