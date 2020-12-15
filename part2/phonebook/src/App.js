@@ -26,68 +26,86 @@ const App = () => {
     const addPerson = (event) => {
         event.preventDefault()
 
-        // check duplicate
-        if (persons.some((person) => person.name === newName)) {
-            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-                const personToUpdate = persons.find((person) => person.name === newName)
-                personToUpdate.number = newNumber
-
-                personService.updateNumber(personToUpdate.id, personToUpdate)
-                    .then((udpatedPerson) => {
-                        setPersons(persons.map((person) => person.id !== personToUpdate.id
-                            ? person
-                            : udpatedPerson
-                        ))
-                        setNewName('')
-                        setNewNumber('')
-                        setNotifType('success')
-                        setNotifMessage(
-                            `Updated ${personToUpdate.name}`
-                        )
-                        setTimeout(() => {
-                            setNotifMessage(null)
-                            setNotifType(null)
-                        }, 5000)
-                    })
-                    .catch((err) => {
-                        console.log(err);
-
-                        setNotifType('error')
-                        setNotifMessage(
-                            `Information of ${personToUpdate.name} has already been removed from server`
-                        )
-                        setTimeout(() => {
-                            setNotifMessage(null)
-                            setNotifType(null)
-                        }, 5000)
-                    })
-
-                // cancel number update
-            } else {
-                console.log('cancel');
-            }
-
-            // Brand new entry
-        } else {
-            const newPerson = {
-                name: newName,
-                number: newNumber
-            }
-            personService.create(newPerson)
-                .then((createdPerson) => {
-                    setPersons(persons.concat(createdPerson))
-                    setNewName('')
-                    setNewNumber('')
-                    setNotifType('success')
-                    setNotifMessage(
-                        `Added ${newPerson.name}`
-                    )
-                    setTimeout(() => {
-                        setNotifMessage(null)
-                        setNotifType(null)
-                    }, 5000)
-                })
+        const newPerson = {
+            name: newName,
+            number: newNumber
         }
+        personService.create(newPerson)
+            .then((createdPerson) => {
+                setPersons(persons.concat(createdPerson))
+                setNewName('')
+                setNewNumber('')
+                setNotifType('success')
+                setNotifMessage(
+                    `Added ${newPerson.name}`
+                )
+                setTimeout(() => {
+                    setNotifMessage(null)
+                    setNotifType(null)
+                }, 5000)
+            })
+        // // check duplicate
+        // if (persons.some((person) => person.name === newName)) {
+        //     if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        //         const personToUpdate = persons.find((person) => person.name === newName)
+        //         personToUpdate.number = newNumber
+
+        //         personService.updateNumber(personToUpdate.id, personToUpdate)
+        //             .then((udpatedPerson) => {
+        //                 setPersons(persons.map((person) => person.id !== personToUpdate.id
+        //                     ? person
+        //                     : udpatedPerson
+        //                 ))
+        //                 setNewName('')
+        //                 setNewNumber('')
+        //                 setNotifType('success')
+        //                 setNotifMessage(
+        //                     `Updated ${personToUpdate.name}`
+        //                 )
+        //                 setTimeout(() => {
+        //                     setNotifMessage(null)
+        //                     setNotifType(null)
+        //                 }, 5000)
+        //             })
+        //             .catch((err) => {
+        //                 console.log(err);
+
+        //                 setNotifType('error')
+        //                 setNotifMessage(
+        //                     `Information of ${personToUpdate.name} has already been removed from server`
+        //                 )
+        //                 setTimeout(() => {
+        //                     setNotifMessage(null)
+        //                     setNotifType(null)
+        //                 }, 5000)
+        //             })
+
+        //         // cancel number update
+        //     } else {
+        //         console.log('cancel');
+        //     }
+
+        //     // Brand new entry
+        // } else {
+        //     const newPerson = {
+        //         name: newName,
+        //         number: newNumber
+        //     }
+        //     personService.create(newPerson)
+        //         .then((createdPerson) => {
+        //             setPersons(persons.concat(createdPerson))
+        //             setNewName('')
+        //             setNewNumber('')
+        //             setNotifType('success')
+        //             setNotifMessage(
+        //                 `Added ${newPerson.name}`
+        //             )
+        //             setTimeout(() => {
+        //                 setNotifMessage(null)
+        //                 setNotifType(null)
+        //             }, 5000)
+        //         })
+        // }
 
     }
 

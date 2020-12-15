@@ -1,0 +1,119 @@
+{
+  "anecdotes": [
+    {
+      "content": "If it hurts, do it more often",
+      "id": "47145",
+      "votes": 28
+    },
+    {
+      "content": "Adding manpower to a late software project makes it later!",
+      "id": "21149",
+      "votes": 11
+    },
+    {
+      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+      "id": "69581",
+      "votes": 3
+    },
+    {
+      "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+      "id": "36975",
+      "votes": 2
+    },
+    {
+      "content": "Premature optimization is the root of all evil.",
+      "id": "25170",
+      "votes": 3
+    },
+    {
+      "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+      "id": "98312",
+      "votes": 2
+    },
+    {
+      "content": "The quick brown fox jumps over the lazy doge",
+      "votes": 2,
+      "id": "WYmnpJa"
+    },
+    {
+      "content": "6.16 test",
+      "votes": 37,
+      "id": "FJdvl9G"
+    },
+    {
+      "content": "pre 6.18 test",
+      "votes": 3,
+      "id": "VVgEifB"
+    },
+    {
+      "content": "pre 6.18 test 2",
+      "votes": 5,
+      "id": "tNfaO4V"
+    },
+    {
+      "content": "6.18 test. should notify for 10 sec",
+      "votes": 3,
+      "id": "QnpdgTS"
+    },
+    {
+      "content": "6.20 test using props",
+      "votes": 3,
+      "id": "3gZ3QWh"
+    },
+    {
+      "content": "6.20 testing using mapDispatchToProps",
+      "votes": 1,
+      "id": "uGBCv_8"
+    },
+    {
+      "content": "another test before proceeding to 6.21",
+      "votes": 2,
+      "id": "YCfMFTM"
+    },
+    {
+      "content": "yeet 6.21",
+      "votes": 0,
+      "id": "rQ3kktk"
+    },
+    {
+      "content": "6.21 test",
+      "votes": 0,
+      "id": "gr5UGNe"
+    },
+    {
+      "content": "heee",
+      "votes": 0,
+      "id": "kMhTx-5"
+    },
+    {
+      "content": "21",
+      "votes": 0,
+      "id": "LVOj4nQ"
+    },
+    {
+      "content": "test",
+      "votes": 0,
+      "id": "KJ0ZhZV"
+    },
+    {
+      "content": "",
+      "votes": 0,
+      "id": "d6DePcZ"
+    },
+    {
+      "content": "new",
+      "votes": 0,
+      "id": "MKYoy3k"
+    },
+    {
+      "content": "2111",
+      "votes": 0,
+      "id": "VBrMsuA"
+    },
+    {
+      "content": "6.21 final test",
+      "votes": 0,
+      "id": "FVBerl9"
+    }
+  ]
+}
