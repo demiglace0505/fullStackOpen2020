@@ -1,0 +1,94 @@
+query bookCount{
+  bookCount
+}
+
+query authorCount{
+  authorCount
+}
+
+query allBooks{
+  allBooks
+  {
+    id
+    title
+    published
+    genres
+  }
+}
+
+query allBookWithGenre($genreToSearch:String){
+  allBooks(
+    genre: $genreToSearch
+  ){
+    id
+    title
+    published
+    genres
+  }
+}
+
+query allAuthors{
+  allAuthors
+  {
+    id
+    name
+    born
+    bookCount
+  }
+}
+
+mutation addBook {
+  addBook(
+    title: "add book without logging in (no headers)",
+    published: 2011,
+    author: "not logged in",
+    genres: ["hehe", "test"]
+  ){
+    id
+    title
+    published
+    genres
+    author{
+      id
+      name
+    }
+  }
+}
+
+mutation editAuthor($authorToEdit:String!, $setBornTo:Int!){
+  editAuthor(
+    name: $authorToEdit,
+    setBornTo: $setBornTo
+  ){
+    id
+    born
+    name
+  }
+}
+
+mutation createUser($username:String!, $favoriteGenre:String!){
+  createUser(
+    username: $username,
+    favoriteGenre: $favoriteGenre
+  ){
+    id
+    username
+    favoriteGenre
+  }
+}
+
+mutation login($username:String!){
+  login(
+    username: $username,
+    password: "testPass"
+  ){
+    value
+  }
+}
+
+query me{
+  me{
+    username
+    id
+  }
+}
